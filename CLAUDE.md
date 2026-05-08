@@ -177,7 +177,7 @@ Supabase permissions required:
 
 ## Drug Label — Print
 
-- `handlePrint()` เปิด `window.open('', '_blank', 'width=420,height=320,left=-1000,top=-1000')` — popup นอกจอเพื่อไม่ให้กระพริบ
+- `handlePrint()` เปิด `window.open('', '_blank', 'width=800,height=600,left=-1000,top=-1000')` — popup นอกจอเพื่อไม่ให้กระพริบ
 - Label size: `@page { size: 95mm 65mm; margin: 0; }`
 - ดึง `<style>` และ `<link rel="stylesheet">` จาก parent head มาใส่ใน popup (รวม App.css)
 
@@ -196,4 +196,5 @@ Supabase permissions required:
 
 ## Backup Files
 
-Backup created: `App.backup.20260411_135747.tsx` and `App.backup.20260411_135747.css`
+- `App.backup.20260411_135747.tsx` and `App.backup.20260411_135747.css`
+- `supabase/functions/translate-medicine/index.backup.20260508_143950.ts` — ก่อนลอง Gemini (ใช้ Groq อยู่)
