@@ -2380,6 +2380,7 @@ body.pulse-b .cart-inline-btn.in-cart {
 .dl-result-row {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
   padding: 0.6rem 1rem;
   border-bottom: 1px solid #f0ebe3;
@@ -2408,9 +2409,9 @@ body.pulse-b .cart-inline-btn.in-cart {
 .dl-result-row.selected .dl-result-pick { background: #d4af37; color: #241a07; }
 
 .dl-result-sku  { font-size: 12px; font-weight: 700; color: #2d2a26; white-space: nowrap; flex-shrink: 0; font-family: 'Outfit', sans-serif; }
-.dl-result-name { font-size: 13px; color: #2d2a26; flex: 1; font-family: 'Mitr', sans-serif; }
-.dl-result-generic { font-size: 12px; color: #9a8f82; font-family: 'Outfit', sans-serif; }
-.dl-result-usage { font-size: 11px; color: #b0a090; font-style: italic; width: 100%; margin-top: 1px; font-family: 'Noto Sans Thai', sans-serif; }
+.dl-result-name { font-size: 13px; color: #2d2a26; flex: 1; white-space: nowrap; font-family: 'Mitr', sans-serif; }
+.dl-result-generic { font-size: 12px; color: #9a8f82; font-family: 'Outfit', sans-serif; flex-basis: 100%; margin-top: 2px; }
+.dl-result-usage { font-size: 11px; color: #b0a090; font-style: italic; flex-basis: 100%; margin-top: 1px; font-family: 'Noto Sans Thai', sans-serif; }
 
 /* Preview panel */
 .dl-preview-panel {
