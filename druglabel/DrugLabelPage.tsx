@@ -418,7 +418,7 @@ export function DrugLabelPage({ onGoPriceTag, onGoDrugLabel, onGoStockCheck, onG
               <span className="page-nav-label">สต๊อค</span>
             </button>
             <button className="page-nav-card" onClick={onGoCustomerHistory} type="button" title="ประวัติลูกค้า">
-              <span className="page-nav-icon">👤</span>
+              <span className="page-nav-icon">🪪</span>
               <span className="page-nav-label">ประวัติ</span>
             </button>
           </div>

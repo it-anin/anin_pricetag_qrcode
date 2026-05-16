@@ -720,7 +720,7 @@ ${sheetsHtml}
               onClick={() => setCurrentPage('druglabel')}
               title="สลับหน้าฉลากยา"
             >
-              <span className="page-nav-icon">📰</span>
+              <span className="page-nav-icon">📝</span>
               <span className="page-nav-label">ฉลากยา</span>
             </button>
             <button
@@ -736,7 +736,7 @@ ${sheetsHtml}
               onClick={() => setCurrentPage('customerhistory')}
               title="ประวัติลูกค้า"
             >
-              <span className="page-nav-icon">👤</span>
+              <span className="page-nav-icon">🪪</span>
               <span className="page-nav-label">ประวัติ</span>
             </button>
           </div>
