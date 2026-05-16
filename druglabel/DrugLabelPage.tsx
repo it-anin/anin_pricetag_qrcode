@@ -409,7 +409,7 @@ export function DrugLabelPage({ onGoPriceTag, onGoDrugLabel, onGoStockCheck }: P
               <span className="page-nav-label">ป้ายราคา</span>
             </button>
             <button className="page-nav-card page-nav-card--active" onClick={onGoDrugLabel} type="button" title="หน้าฉลากยา">
-              <span className="page-nav-icon">📰</span>
+              <span className="page-nav-icon">📝</span>
               <span className="page-nav-label">ฉลากยา</span>
             </button>
             <button className="page-nav-card" onClick={onGoStockCheck} type="button" title="เช็คสต๊อค">

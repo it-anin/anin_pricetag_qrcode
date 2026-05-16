@@ -107,7 +107,7 @@ export function StockCheckPage({ onGoPriceTag, onGoDrugLabel, onGoStockCheck }: 
               <span className="page-nav-label">ป้ายราคา</span>
             </button>
             <button className="page-nav-card" onClick={onGoDrugLabel} title="ฉลากยา">
-              <span className="page-nav-icon">📰</span>
+              <span className="page-nav-icon">📝</span>
               <span className="page-nav-label">ฉลากยา</span>
             </button>
             <button className="page-nav-card page-nav-card--active" onClick={onGoStockCheck} title="เช็คสต๊อค">

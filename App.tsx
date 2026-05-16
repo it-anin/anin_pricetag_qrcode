@@ -719,7 +719,7 @@ ${sheetsHtml}
               onClick={() => setCurrentPage('druglabel')}
               title="สลับหน้าฉลากยา"
             >
-              <span className="page-nav-icon">📰</span>
+              <span className="page-nav-icon">📝</span>
               <span className="page-nav-label">ฉลากยา</span>
             </button>
             <button
