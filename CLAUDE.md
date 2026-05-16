@@ -13,11 +13,12 @@ npx vercel --prod # Deploy to Vercel
 
 ## Architecture
 
-Two-page React app sharing the same `App.css` and Supabase project.
+Three-page React app sharing the same `App.css` and Supabase project.  
+`currentPage` state in `App.tsx`: `'pricetag' | 'druglabel' | 'stockcheck'`
 
 **Key files — ป้ายราคา (Price Tag):**
 - `App.tsx` — entire price-tag app: types, state, Supabase fetch, search, QR generation, print logic, JSX
-- `App.css` — all styles for both pages including `@media print` rules
+- `App.css` — all styles for all pages including `@media print` rules
 - `supabase.ts` — shared Supabase client (root dir, not src/)
 - `vite.config.ts` — Vite config with `host: '0.0.0.0'` for LAN access
 - `main.tsx` — React entry point
@@ -34,17 +35,37 @@ Two-page React app sharing the same `App.css` and Supabase project.
 - `druglabel/translate.ts` — calls Edge Function `translate-medicine` via Groq API
 - `druglabel/format.ts` — `formatBeDate()` Thai Buddhist Era date formatter
 
+**Key files — เช็คสต๊อค (Stock Check):**
+- `StockCheckPage.tsx` — stock check page: search-first query, branch tabs, table display
+- `upload-stock.mjs` — Node.js script: reads CSV → uploads to Supabase `stock` table (ใช้กับ Task Scheduler)
+- `run-upload-stock.bat` — batch wrapper สำหรับ Task Scheduler
+- `stock-setup.sql` — SQL สำหรับสร้างตาราง `stock` ใน Supabase
+- `วิธีติดตั้ง-task-scheduler.md` — คู่มือตั้งค่า Task Scheduler แบบ step-by-step
+
 ## Database (Supabase)
 
-- Table: `products` (barcode, sku, name, unit, price, category, updated_at)
-- RLS policies: `public read` (SELECT) + `public write` (ALL) — both enabled
-- Search: queries Supabase directly with `.or('name.ilike.%x%,sku.eq.x,barcode.eq.x')` — NOT client-side filter
+**Table: `products`** (barcode, sku, name, unit, price, category, updated_at)
+- RLS: `public read` (SELECT) + `public write` (ALL)
+- Search: queries Supabase directly — NOT client-side filter
 - On mount: fetches only latest `updated_at` for timestamp display
 - Admin upload: CSV → PapaParse → delete all → insert in 500-row chunks
 
+**Table: `stock`** (id, branch, sku, name, qty, unit, price, uploaded_at)
+- RLS: `public read stock` (SELECT) + `public write stock` (ALL)
+- สร้างด้วย `stock-setup.sql`
+- Upload: ผ่าน `upload-stock.mjs` (Node.js script) — ไม่ผ่านเว็บ
+- ไม่มี web upload UI — ใช้ Task Scheduler รัน script ทุก 5 นาทีแทน
+
 ## CSV Format
 
-Columns (zero-indexed): A=Barcode(0), B=Price(1), C=Category(2), E=SKU(4), F=Name(5), G=Unit(6). Row 0 is header, parsing starts from row 1.
+**Products CSV** (Admin upload via web):  
+Columns (zero-indexed): A=Barcode(0), B=Price(1), C=Category(2), E=SKU(4), F=Name(5), G=Unit(6). Row 0 = header.
+
+**Stock CSV** (export จาก POS → `upload-stock.mjs`):  
+Columns (zero-indexed): D=Branch(3), E=SKU(4), F=Name(5), G=จำนวน(6), H=หน่วย(7), I=ราคาต่อหน่วย(8). Row 0 = header.  
+Branch mapping (case-insensitive): `Warehouse`→คลังสินค้า, `Front Store`→SRC, `Main KKL`→KKL, `Main SSS`→SSS  
+ชื่อไฟล์: `All_stock.csv` — path กำหนดใน `upload-stock.mjs` บรรทัด `CSV_PATH`  
+Parser: custom `parseCSV()` — `"` เริ่ม quoted mode เฉพาะตอน `field === ''` เพื่อรองรับ inch symbol `2"` กลางชื่อสินค้า
 
 ## Search Behavior
 
@@ -194,7 +215,25 @@ Supabase permissions required:
 - Free tier limit: 100,000 tokens/day — เมื่อถึง limit แสดง "ถึง rate limit — รอประมาณ xx นาที"
 - Edge Function คืน `{ error: { type: 'rate_limit', retry_minutes: N } }` status 200 (ไม่ใช่ 500)
 
+## Stock Check — Search Behavior
+
+- Search-first: ไม่โหลดข้อมูลทั้งหมดตอน mount — query Supabase เมื่อพิมพ์เท่านั้น
+- Numeric input → `sku ILIKE 'term%'` (prefix match — ขึ้นต้นด้วย)
+- Text input → `name ILIKE '%term%'` (contains)
+- Filter by branch ผ่าน `.eq('branch', activeTab)`
+- Limit 300 รายการต่อการค้นหา
+- Tabs (คลังสินค้า / SRC / KKL / SSS) ซ่อนก่อนค้นหา แสดงหลังจาก `searched = true`
+- จำนวน/ราคา แสดงโดยตัด decimal: `Math.floor(Number(value))`
+- ราคาต่อหน่วยใช้ `.toLocaleString()` เพิ่ม comma
+
+## Stock Check — Navigation
+
+ปุ่ม 📦 สต๊อค ปรากฏในทุกหน้า:
+- `App.tsx` hero header (pricetag page)
+- `druglabel/DrugLabelPage.tsx` — props: `onGoPriceTag`, `onGoDrugLabel`, `onGoStockCheck`
+- `StockCheckPage.tsx` — แสดง active state
+
 ## Backup Files
 
-- `App.backup.20260411_135747.tsx` and `App.backup.20260411_135747.css`
+- `App.backup.20260507_110405.tsx` and `App.backup.20260507_110405.css`
 - `supabase/functions/translate-medicine/index.backup.20260508_143950.ts` — ก่อนลอง Gemini (ใช้ Groq อยู่)

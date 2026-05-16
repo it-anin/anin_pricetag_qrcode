@@ -951,7 +951,7 @@ body {
   align-items: center;
   padding: 14px 20px;
   background: linear-gradient(135deg, #d4af37, #f2d98d);
-  border-radius: 16px 16px 0 0;
+  border-radius: 0;
   font-weight: 400;
   font-size: 13px;
   color: #2d2a26;
@@ -1247,7 +1247,7 @@ body.pulse-b .cart-inline-btn.in-cart {
 /* Product Table */
 .product-table-wrap {
   background: white;
-  border-radius: 16px;
+  border-radius: 0px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   overflow: auto;
   margin-bottom: 2rem;
@@ -2726,3 +2726,102 @@ body.pulse-b .cart-inline-btn.in-cart {
     height: 125px;
   }
 }
+
+/* ─── Stock Check Page ─── */
+.stock-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 0 0.75rem;
+}
+
+.stock-tabs {
+  display: flex;
+  gap: 5px;
+  align-items: flex-end;
+  padding: 1.2rem 0 0;
+  margin-bottom: -1px;
+}
+
+.stock-tab {
+  padding: 0.55rem 1.6rem;
+  border: 1.5px solid #ddd5c8;
+  border-bottom: none;
+  background: #f0ece5;
+  color: #8a7e72;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 10px 10px 0 0;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  position: relative;
+  bottom: 0;
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.04);
+}
+
+.stock-tab:hover {
+  background: #e8e2d9;
+  color: #4a443d;
+  bottom: 5px;
+  box-shadow: 0 -3px 6px rgba(0,0,0,0.08);
+}
+
+.stock-tab--active {
+  background: linear-gradient(160deg, #f2d98d, #d4af37);
+  color: #2d2a26;
+  border-color: #c9a227;
+  bottom: 3px;
+  box-shadow: 0 -4px 10px rgba(212, 175, 55, 0.35);
+  z-index: 1;
+}
+
+.stock-tab-count {
+  background: rgba(0,0,0,0.1);
+  color: inherit;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  padding: 1px 7px;
+  font-weight: 700;
+}
+
+.stock-tab--active .stock-tab-count {
+  background: rgba(0,0,0,0.15);
+}
+
+.stock-empty-state {
+  text-align: center;
+  padding: 5rem 2rem;
+  color: #b0a898;
+}
+
+.stock-empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Stock table — รองรับชื่อยาว */
+.stock-table-wrap {
+  overflow-x: auto;
+  max-width: 800px;
+  border-radius: 0 0 16px 16px;
+}
+
+.stock-table {
+  table-layout: fixed;
+  width: 100%;
+  min-width: 700px;
+  font-size: 11px;
+}
+
+.stock-table th { padding: 5px 8px; }
+.stock-table td { padding: 4px 8px; }
+
+.stock-table .stock-col-sku   { width: 10%;  white-space: nowrap; }
+.stock-table .stock-col-name  { width: 50%;  white-space: normal; word-break: break-word; line-height: 1.4; }
+.stock-table .stock-col-qty   { width: 10%;  text-align: right; white-space: nowrap; }
+.stock-table .stock-col-unit  { width: 10%;  white-space: nowrap; }
+.stock-table .stock-col-price { width: 10%;  text-align: right; white-space: nowrap; }

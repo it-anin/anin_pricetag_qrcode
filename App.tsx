@@ -4,6 +4,7 @@ import JsBarcode from 'jsbarcode';
 import QRCode from 'qrcode';
 import { supabase } from './supabase';
 import { DrugLabelPage } from './druglabel/DrugLabelPage';
+import { StockCheckPage } from './StockCheckPage';
 import './App.css';
 
 // Types
@@ -141,7 +142,7 @@ const App: React.FC = () => {
   const [rowQty, setRowQty] = useState<Map<string, number>>(new Map());
   const fileInputRef = useRef<HTMLInputElement>(null);
   const lastAutoAddedBarcode = useRef<string>('');
-  const [currentPage, setCurrentPage] = useState<'pricetag' | 'druglabel'>('pricetag');
+  const [currentPage, setCurrentPage] = useState<'pricetag' | 'druglabel' | 'stockcheck'>('pricetag');
 
   // โหลดวันที่ update ล่าสุดจาก Supabase ตอน mount
   useEffect(() => {
@@ -721,6 +722,14 @@ ${sheetsHtml}
               <span className="page-nav-icon">📰</span>
               <span className="page-nav-label">ฉลากยา</span>
             </button>
+            <button
+              className="page-nav-card"
+              onClick={() => setCurrentPage('stockcheck')}
+              title="เช็คสต๊อค"
+            >
+              <span className="page-nav-icon">📦</span>
+              <span className="page-nav-label">สต๊อค</span>
+            </button>
           </div>
         </div>
       </div>)}
@@ -1004,6 +1013,16 @@ ${sheetsHtml}
         <DrugLabelPage
           onGoPriceTag={() => setCurrentPage('pricetag')}
           onGoDrugLabel={() => setCurrentPage('druglabel')}
+          onGoStockCheck={() => setCurrentPage('stockcheck')}
+        />
+      )}
+
+      {/* Stock Check Page */}
+      {currentPage === 'stockcheck' && (
+        <StockCheckPage
+          onGoPriceTag={() => setCurrentPage('pricetag')}
+          onGoDrugLabel={() => setCurrentPage('druglabel')}
+          onGoStockCheck={() => setCurrentPage('stockcheck')}
         />
       )}
 

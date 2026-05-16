@@ -41,9 +41,10 @@ function flatMed(med: MedRow, tr: Omit<TrRow, 'medicine_id'> | null): Medicine {
 interface Props {
   onGoPriceTag: () => void;
   onGoDrugLabel: () => void;
+  onGoStockCheck: () => void;
 }
 
-export function DrugLabelPage({ onGoPriceTag, onGoDrugLabel }: Props) {
+export function DrugLabelPage({ onGoPriceTag, onGoDrugLabel, onGoStockCheck }: Props) {
   const [settings,       setSettings]       = useState<ShopSettings | null>(null);
   const [selectedBranch, setSelectedBranch] = useState<BranchId>('hq');
   const [lang,           setLang]           = useState<Lang>('th');
@@ -410,6 +411,10 @@ export function DrugLabelPage({ onGoPriceTag, onGoDrugLabel }: Props) {
             <button className="page-nav-card page-nav-card--active" onClick={onGoDrugLabel} type="button" title="หน้าฉลากยา">
               <span className="page-nav-icon">📰</span>
               <span className="page-nav-label">ฉลากยา</span>
+            </button>
+            <button className="page-nav-card" onClick={onGoStockCheck} type="button" title="เช็คสต๊อค">
+              <span className="page-nav-icon">📦</span>
+              <span className="page-nav-label">สต๊อค</span>
             </button>
           </div>
         </div>
