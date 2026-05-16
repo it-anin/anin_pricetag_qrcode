@@ -686,7 +686,7 @@ ${sheetsHtml}
       {currentPage === 'pricetag' && (<div className="hero-header">
         <div className="hero-content">
           <h1 className="logo-premium">
-            ANIN Price Tag and QR CODE
+            Price Tag and QR CODE
           </h1>
           <div className="tagline-row">
             {lastUpdated ? (

@@ -83,7 +83,7 @@ export function StockCheckPage({ onGoPriceTag, onGoDrugLabel, onGoStockCheck, on
     <div className="app-container">
       <div className="hero-header">
         <div className="hero-content">
-          <h1 className="logo-premium">ANIN CHECK STOCK</h1>
+          <h1 className="logo-premium">CHECK STOCK</h1>
           <div className="tagline-row">
             {lastUploaded
               ? <span className="updated-badge">Last Updated : {lastUploaded}</span>
